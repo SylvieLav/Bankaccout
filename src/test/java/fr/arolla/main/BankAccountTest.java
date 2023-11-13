@@ -32,13 +32,12 @@ class BankAccountTest {
    }
 
    @Test
-   void should_throw_exception_when_balance_is_50_and_withdrawal_100() {
+   void should_throw_exception_when_balance_is_50_has_withdraw_of_100() {
       // given
       BankAccount bankAccount = new BankAccount("ABC", 50);
 
-      // when
-      // then
+      // when then
       assertThatThrownBy(() -> bankAccount.withdraw(100))
-            .hasMessage("Cannot withdraw 100. Amount left is 50");
+            .hasMessage("Cannot withdraw 100, amount left is 50");
    }
 }

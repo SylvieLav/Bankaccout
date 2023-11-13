@@ -14,7 +14,7 @@ public class BankAccount {
 
    void withdraw (int amount) {
       if (amount > balance) {
-         throw new NotEnoughMoneyException("Cannot withdraw " + amount + ". Amount left is " + balance);
+         throw new NotEnoughMoneyException("Cannot withdraw " + amount + ", amount left is " + balance);
       }
 
       balance = balance - amount;
