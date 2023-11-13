@@ -2,20 +2,29 @@ package fr.arolla.main;
 
 import fr.arolla.exceptions.NotEnoughMoneyException;
 
+import static fr.arolla.main.OperationType.DEPOSIT;
+import static fr.arolla.main.OperationType.WITHDRAWAL;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class BankAccount {
 
    private final String iban;
    private int balance;
+   private List<Operation> operations;
 
    public BankAccount(String iban) {
       this.iban = iban;
+      this.operations = new ArrayList<>();
    }
 
    public BankAccount(String iban, int balance) {
       this.iban = iban;
       this.balance = balance;
+      this.operations = new ArrayList<>();
    }
 
    void withdraw (int amount) {
@@ -24,10 +33,12 @@ public class BankAccount {
       }
 
       balance = balance - amount;
+      operations.add(new Operation(WITHDRAWAL, LocalDate.now(), amount));
    }
 
    void deposit(int amount) {
       balance = balance + amount;
+      operations.add(new Operation(DEPOSIT, LocalDate.now(), amount));
    }
 
    int getBalance() {
@@ -49,4 +60,7 @@ public class BankAccount {
       return Objects.hash(iban);
    }
 
+   public List<Operation> getOperations() {
+      return operations;
+   }
 }

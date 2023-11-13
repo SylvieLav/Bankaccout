@@ -3,6 +3,7 @@ package fr.arolla.main;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
 class BankAccountTest {
@@ -59,5 +60,23 @@ class BankAccountTest {
 
       // then
       assertThat(bankAccount1).isNotEqualTo(bankAccount2);
+   }
+
+   @Test
+   void should_get_operations_whith_exact_data() {
+      // given
+      BankAccount bankAccount = new BankAccount("ABC");
+
+      // when
+      bankAccount.deposit(100);
+      bankAccount.withdraw(30);
+      bankAccount.withdraw(20);
+
+      // then
+      assertThat(bankAccount.getOperations()).containsExactly(
+            new Operation(OperationType.DEPOSIT, LocalDate.now(), 100),
+            new Operation(OperationType.WITHDRAWAL, LocalDate.now(), 30),
+            new Operation(OperationType.WITHDRAWAL, LocalDate.now(), 20)
+      );
    }
 }
