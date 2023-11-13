@@ -1,8 +1,9 @@
 package fr.arolla.main;
 
 public class FizzBuzzRule {
-   private FizzBuzzPredicate predicate;
-   private String output;
+
+   private final FizzBuzzPredicate predicate;
+   private final String output;
 
    FizzBuzzRule(FizzBuzzPredicate predicate, String output) {
       this.predicate = predicate;

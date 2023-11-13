@@ -7,6 +7,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.entry;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -101,10 +102,12 @@ class BankAccountTest {
    @Test
    void should_return_sum_of_withdrawal_between_two_dates() {
       // given
-      addOperation(DEPOSIT, LocalDate.of(2023, 11, 1), 100);
-      addOperation(WITHDRAWAL, LocalDate.of(2023, 11, 10), 10);
-      addOperation(WITHDRAWAL, LocalDate.of(2023, 11, 10), 20);
-      addOperation(WITHDRAWAL, LocalDate.now(), 30);
+      List<Operation> operations = new ArrayList<>();
+      operations.add(createOperation(DEPOSIT, LocalDate.of(2023, 11, 1), 100));
+      operations.add(createOperation(WITHDRAWAL, LocalDate.of(2023, 11, 10), 10));
+      operations.add(createOperation(WITHDRAWAL, LocalDate.of(2023, 11, 10), 20));
+      operations.add(createOperation(WITHDRAWAL, LocalDate.now(), 30));
+      bankAccount = new BankAccount("ABC", operations);
 
       // when
       double withdrawalsAmount = bankAccount.getSumOfWithdrawalBetween(LocalDate.of(2023, 11, 10), LocalDate.of(2023, 11, 11));
@@ -116,10 +119,12 @@ class BankAccountTest {
    @Test
    void should_return_dates_of_all_operations() {
       // given
-      addOperation(DEPOSIT, LocalDate.of(2023, 11, 1), 100);
-      addOperation(WITHDRAWAL, LocalDate.of(2023, 11, 10), 10);
-      addOperation(WITHDRAWAL, LocalDate.of(2023, 11, 10), 20);
-      addOperation(WITHDRAWAL, LocalDate.now(), 30);
+      List<Operation> operations = new ArrayList<>();
+      operations.add(createOperation(DEPOSIT, LocalDate.of(2023, 11, 1), 100));
+      operations.add(createOperation(WITHDRAWAL, LocalDate.of(2023, 11, 10), 10));
+      operations.add(createOperation(WITHDRAWAL, LocalDate.of(2023, 11, 10), 20));
+      operations.add(createOperation(WITHDRAWAL, LocalDate.now(), 30));
+      bankAccount = new BankAccount("ABC", operations);
 
       // when
       List<LocalDate> dates = bankAccount.getOperationsDates();
@@ -132,17 +137,19 @@ class BankAccountTest {
             LocalDate.now());
    }
 
-   private static void addOperation(OperationType operationType, LocalDate date, int amount) {
-      bankAccount.getOperations().add(new Operation(operationType, date, amount));
+   private static Operation createOperation(OperationType operationType, LocalDate date, int amount) {
+      return new Operation(operationType, date, amount);
    }
 
    @Test
    void should_return_all_operations_given_a_date() {
       // given
-      addOperation(DEPOSIT, LocalDate.of(2023, 11, 1), 100);
-      addOperation(WITHDRAWAL, LocalDate.of(2023, 11, 10), 10);
-      addOperation(WITHDRAWAL, LocalDate.of(2023, 11, 10), 20);
-      addOperation(WITHDRAWAL, LocalDate.now(), 30);
+      List<Operation> operations = new ArrayList<>();
+      operations.add(createOperation(DEPOSIT, LocalDate.of(2023, 11, 1), 100));
+      operations.add(createOperation(WITHDRAWAL, LocalDate.of(2023, 11, 10), 10));
+      operations.add(createOperation(WITHDRAWAL, LocalDate.of(2023, 11, 10), 20));
+      operations.add(createOperation(WITHDRAWAL, LocalDate.now(), 30));
+      bankAccount = new BankAccount("ABC", operations);
 
       // when
       Map<LocalDate, List<Operation>> operationsByDate = bankAccount.getOperationsByDate();
