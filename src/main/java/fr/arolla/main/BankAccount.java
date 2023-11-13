@@ -9,21 +9,6 @@ public class BankAccount {
    private final String iban;
    private int balance;
 
-   @Override
-   public boolean equals(Object o) {
-      if (this == o) return true;
-
-      if (o == null || getClass() != o.getClass()) return false;
-
-      BankAccount that = (BankAccount) o;
-      return Objects.equals(iban, that.iban);
-   }
-
-   @Override
-   public int hashCode() {
-      return Objects.hash(iban);
-   }
-
    public BankAccount(String iban) {
       this.iban = iban;
    }
@@ -48,4 +33,20 @@ public class BankAccount {
    int getBalance() {
       return balance;
    }
+
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+
+      if (o == null || getClass() != o.getClass()) return false;
+
+      BankAccount that = (BankAccount) o;
+      return Objects.equals(iban, that.iban);
+   }
+
+   @Override
+   public int hashCode() {
+      return Objects.hash(iban);
+   }
+
 }

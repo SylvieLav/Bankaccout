@@ -42,7 +42,7 @@ class BankAccountTest {
    }
 
    @Test
-   void should_two_accounts_with_same_iban_be_equal() {
+   void should_two_accounts_be_equal_when_having_same_iban() {
       // given when
       BankAccount bankAccount1 = new BankAccount("ABC");
       BankAccount bankAccount2 = new BankAccount("ABC");
@@ -52,7 +52,7 @@ class BankAccountTest {
    }
 
    @Test
-   void should_two_accounts_with_different_ibans_not_be_equal() {
+   void should_two_accounts_not_be_equal_when_having_different_ibans() {
       // given when
       BankAccount bankAccount1 = new BankAccount("ABC");
       BankAccount bankAccount2 = new BankAccount("DEF");
