@@ -14,7 +14,7 @@ public class BankAccount {
 
    private final String iban;
    private int balance;
-   private List<Operation> operations;
+   private final List<Operation> operations;
 
    public BankAccount(String iban) {
       this.iban = iban;
