@@ -7,9 +7,11 @@ import static fr.arolla.main.OperationType.WITHDRAWAL;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.OptionalDouble;
+import java.util.stream.Collectors;
 
 public class BankAccount {
 
@@ -73,7 +75,19 @@ public class BankAccount {
       if (average.isEmpty()) {
          return 0;
       }
-      
+
       return average.getAsDouble();
+   }
+
+   public double getSumOfWithdrawalBetween(LocalDate start, LocalDate end) {
+      return operations.stream()
+            .filter(o -> o.getOperationType() == WITHDRAWAL)
+            .filter(o -> o.getLocalDate().isAfter(start.minusDays(1)) && o.getLocalDate().isBefore(end.plusDays(1)))
+            .mapToInt(Operation::getAmount)
+            .sum();
+   }
+
+   public List<LocalDate> getOperationsDates() {
+      return operations.stream().map(Operation::getLocalDate).toList();
    }
 }
