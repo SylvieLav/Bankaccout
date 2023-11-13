@@ -1,5 +1,7 @@
 package fr.arolla.main;
 
+import fr.arolla.exceptions.NotEnoughMoneyException;
+
 public class BankAccount {
 
    private final String iban;
@@ -10,7 +12,11 @@ public class BankAccount {
       this.balance = balance;
    }
 
-   void withdraw(int amount) {
+   void withdraw (int amount) {
+      if (amount > balance) {
+         throw new NotEnoughMoneyException("Cannot withdraw " + amount + ". Amount left is " + balance);
+      }
+
       balance = balance - amount;
    }
 

@@ -1,6 +1,7 @@
 package fr.arolla.main;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
 
@@ -30,5 +31,14 @@ class BankAccountTest {
       assertThat(bankAccount.getBalance()).isEqualTo(150);
    }
 
+   @Test
+   void should_throw_exception_when_balance_is_50_and_withdrawal_100() {
+      // given
+      BankAccount bankAccount = new BankAccount("ABC", 50);
 
+      // when
+      // then
+      assertThatThrownBy(() -> bankAccount.withdraw(100))
+            .hasMessage("Cannot withdraw 100. Amount left is 50");
+   }
 }
