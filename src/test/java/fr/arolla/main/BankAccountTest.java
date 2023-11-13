@@ -40,4 +40,24 @@ class BankAccountTest {
       assertThatThrownBy(() -> bankAccount.withdraw(100))
             .hasMessage("Cannot withdraw 100, amount left is 50");
    }
+
+   @Test
+   void should_two_accounts_with_same_iban_be_equal() {
+      // given when
+      BankAccount bankAccount1 = new BankAccount("ABC");
+      BankAccount bankAccount2 = new BankAccount("ABC");
+
+      // then
+      assertThat(bankAccount1).isEqualTo(bankAccount2);
+   }
+
+   @Test
+   void should_two_accounts_with_different_ibans_not_be_equal() {
+      // given when
+      BankAccount bankAccount1 = new BankAccount("ABC");
+      BankAccount bankAccount2 = new BankAccount("DEF");
+
+      // then
+      assertThat(bankAccount1).isNotEqualTo(bankAccount2);
+   }
 }

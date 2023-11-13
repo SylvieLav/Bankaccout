@@ -2,10 +2,31 @@ package fr.arolla.main;
 
 import fr.arolla.exceptions.NotEnoughMoneyException;
 
+import java.util.Objects;
+
 public class BankAccount {
 
    private final String iban;
    private int balance;
+
+   @Override
+   public boolean equals(Object o) {
+      if (this == o) return true;
+
+      if (o == null || getClass() != o.getClass()) return false;
+
+      BankAccount that = (BankAccount) o;
+      return Objects.equals(iban, that.iban);
+   }
+
+   @Override
+   public int hashCode() {
+      return Objects.hash(iban);
+   }
+
+   public BankAccount(String iban) {
+      this.iban = iban;
+   }
 
    public BankAccount(String iban, int balance) {
       this.iban = iban;
