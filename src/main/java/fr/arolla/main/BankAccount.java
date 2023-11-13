@@ -7,8 +7,8 @@ import static fr.arolla.main.OperationType.WITHDRAWAL;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.OptionalDouble;
 import java.util.stream.Collectors;
@@ -89,5 +89,9 @@ public class BankAccount {
 
    public List<LocalDate> getOperationsDates() {
       return operations.stream().map(Operation::getLocalDate).toList();
+   }
+
+   public Map<LocalDate, List<Operation>> getOperationsByDate() {
+      return operations.stream().collect(Collectors.groupingBy(Operation::getLocalDate));
    }
 }

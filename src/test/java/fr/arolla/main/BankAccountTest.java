@@ -4,8 +4,12 @@ import static fr.arolla.main.OperationType.DEPOSIT;
 import static fr.arolla.main.OperationType.WITHDRAWAL;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.entry;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class BankAccountTest {
@@ -128,7 +132,28 @@ class BankAccountTest {
             LocalDate.now());
    }
 
-   private static boolean addOperation(OperationType operationType, LocalDate date, int amount) {
-      return bankAccount.getOperations().add(new Operation(operationType, date, amount));
+   private static void addOperation(OperationType operationType, LocalDate date, int amount) {
+      bankAccount.getOperations().add(new Operation(operationType, date, amount));
+   }
+
+   @Test
+   void should_return_all_operations_given_a_date() {
+      // given
+      addOperation(DEPOSIT, LocalDate.of(2023, 11, 1), 100);
+      addOperation(WITHDRAWAL, LocalDate.of(2023, 11, 10), 10);
+      addOperation(WITHDRAWAL, LocalDate.of(2023, 11, 10), 20);
+      addOperation(WITHDRAWAL, LocalDate.now(), 30);
+
+      // when
+      Map<LocalDate, List<Operation>> operationsByDate = bankAccount.getOperationsByDate();
+
+      // then
+      assertThat(operationsByDate).containsExactly(
+            entry(LocalDate.now(), List.of(new Operation(WITHDRAWAL, LocalDate.now(), 30))),
+            entry(LocalDate.of(2023, 11, 10),
+                  List.of(
+                        new Operation(WITHDRAWAL, LocalDate.of(2023, 11, 10), 10),
+                        new Operation(WITHDRAWAL, LocalDate.of(2023, 11, 10), 20))),
+            entry(LocalDate.of(2023, 11, 1), List.of(new Operation(DEPOSIT, LocalDate.of(2023, 11, 1), 100))));
    }
 }
