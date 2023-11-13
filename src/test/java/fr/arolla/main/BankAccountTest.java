@@ -63,7 +63,7 @@ class BankAccountTest {
    }
 
    @Test
-   void should_get_operations_whith_exact_data() {
+   void should_get_operations_with_exact_data() {
       // given
       BankAccount bankAccount = new BankAccount("ABC");
 
