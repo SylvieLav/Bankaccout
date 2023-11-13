@@ -23,7 +23,7 @@ public class BankAccount {
       this.operations = new ArrayList<>();
    }
 
-   void withdraw (int amount) {
+   void withdraw(int amount) {
       int balance = getBalance();
       if (amount > balance) {
          throw new NotEnoughMoneyException("Cannot withdraw " + amount + ", amount left is " + balance);
