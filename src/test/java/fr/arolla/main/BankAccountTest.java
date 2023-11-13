@@ -11,7 +11,8 @@ class BankAccountTest {
    @Test
    void should_balance_be_75_when_balance_is_100_has_withdraw_of_25() {
       // given
-      BankAccount bankAccount = new BankAccount("ABC", 100);
+      BankAccount bankAccount = new BankAccount("ABC");
+      bankAccount.deposit(100);
 
       // when
       bankAccount.withdraw(25);
@@ -23,7 +24,8 @@ class BankAccountTest {
    @Test
    void should_balance_be_150_when_balance_is_50_has_deposit_of_100() {
       // given
-      BankAccount bankAccount = new BankAccount("ABC", 50);
+      BankAccount bankAccount = new BankAccount("ABC");
+      bankAccount.deposit(50);
 
       // when
       bankAccount.deposit(100);
@@ -35,7 +37,8 @@ class BankAccountTest {
    @Test
    void should_throw_exception_when_balance_is_50_has_withdraw_of_100() {
       // given
-      BankAccount bankAccount = new BankAccount("ABC", 50);
+      BankAccount bankAccount = new BankAccount("ABC");
+      bankAccount.deposit(50);
 
       // when then
       assertThatThrownBy(() -> bankAccount.withdraw(100))
@@ -76,7 +79,20 @@ class BankAccountTest {
       assertThat(bankAccount.getOperations()).containsExactly(
             new Operation(OperationType.DEPOSIT, LocalDate.now(), 100),
             new Operation(OperationType.WITHDRAWAL, LocalDate.now(), 30),
-            new Operation(OperationType.WITHDRAWAL, LocalDate.now(), 20)
-      );
+            new Operation(OperationType.WITHDRAWAL, LocalDate.now(), 20));
+   }
+
+   @Test
+   void should_return_average_amount() {
+      // given
+      BankAccount bankAccount = new BankAccount("ABC");
+
+      // when
+      bankAccount.deposit(100);
+      bankAccount.withdraw(30);
+      bankAccount.withdraw(20);
+
+      //then
+      assertThat(bankAccount.getAverageOperationAmounts()).isEqualTo(50);
    }
 }

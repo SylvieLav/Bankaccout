@@ -9,11 +9,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.OptionalDouble;
 
 public class BankAccount {
 
    private final String iban;
-   private int balance;
    private final List<Operation> operations;
 
    public BankAccount(String iban) {
@@ -21,28 +21,32 @@ public class BankAccount {
       this.operations = new ArrayList<>();
    }
 
-   public BankAccount(String iban, int balance) {
-      this.iban = iban;
-      this.balance = balance;
-      this.operations = new ArrayList<>();
-   }
-
    void withdraw (int amount) {
+      int balance = getBalance();
       if (amount > balance) {
          throw new NotEnoughMoneyException("Cannot withdraw " + amount + ", amount left is " + balance);
       }
 
-      balance = balance - amount;
       operations.add(new Operation(WITHDRAWAL, LocalDate.now(), amount));
    }
 
    void deposit(int amount) {
-      balance = balance + amount;
       operations.add(new Operation(DEPOSIT, LocalDate.now(), amount));
    }
 
    int getBalance() {
-      return balance;
+      int deposits = operations.stream()
+            .filter(o -> o.getOperationType() == DEPOSIT)
+            .map(Operation::getAmount)
+            .mapToInt(i -> i)
+            .sum();
+      int withdrawals = operations.stream()
+            .filter(o -> o.getOperationType() == WITHDRAWAL)
+            .map(Operation::getAmount)
+            .mapToInt(i -> i)
+            .sum();
+
+      return deposits - withdrawals;
    }
 
    @Override
@@ -62,5 +66,14 @@ public class BankAccount {
 
    public List<Operation> getOperations() {
       return operations;
+   }
+
+   public double getAverageOperationAmounts() {
+      OptionalDouble average = operations.stream().mapToInt(Operation::getAmount).average();
+      if (average.isEmpty()) {
+         return 0;
+      }
+      
+      return average.getAsDouble();
    }
 }

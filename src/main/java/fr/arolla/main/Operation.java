@@ -10,7 +10,6 @@ public class Operation {
    private final int amount;
 
    public Operation(OperationType operationType, LocalDate localDate, int amount) {
-
       this.operationType = operationType;
       this.localDate = localDate;
       this.amount = amount;
@@ -41,5 +40,17 @@ public class Operation {
             ", localDate=" + localDate +
             ", amount=" + amount +
             '}';
+   }
+
+   public OperationType getOperationType() {
+      return operationType;
+   }
+
+   public LocalDate getLocalDate() {
+      return localDate;
+   }
+
+   public int getAmount() {
+      return amount;
    }
 }
