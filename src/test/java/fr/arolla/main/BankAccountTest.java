@@ -2,10 +2,11 @@ package fr.arolla.main;
 
 import static fr.arolla.main.OperationType.DEPOSIT;
 import static fr.arolla.main.OperationType.WITHDRAWAL;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.entry;
+import static org.assertj.core.api.Assertions.*;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -162,5 +163,22 @@ class BankAccountTest {
                         new Operation(WITHDRAWAL, LocalDate.of(2023, 11, 10), 10),
                         new Operation(WITHDRAWAL, LocalDate.of(2023, 11, 10), 20))),
             entry(LocalDate.of(2023, 11, 1), List.of(new Operation(DEPOSIT, LocalDate.of(2023, 11, 1), 100))));
+   }
+
+   @Test
+   void should_access_by_reflexion() throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+//      Method[] methods = BankAccount.class.getMethods();
+//      for (Method method : methods) {
+//         System.out.println(method);
+//      }
+
+      Operation operation = Operation.class.getDeclaredConstructor(
+              OperationType.class,
+              LocalDate.class,
+              Integer.class)
+              .newInstance(DEPOSIT, LocalDate.now(), 100);
+      System.out.println(operation);
+
+      System.out.println(Operation.class.isEnum());
    }
 }
