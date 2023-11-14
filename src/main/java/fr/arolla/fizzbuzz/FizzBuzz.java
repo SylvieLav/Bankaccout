@@ -1,4 +1,6 @@
-package fr.arolla.main;
+package fr.arolla.fizzbuzz;
+
+import fr.arolla.fizzbuzz.rule.FizzBuzzRule;
 
 import java.util.ArrayList;
 import java.util.List;

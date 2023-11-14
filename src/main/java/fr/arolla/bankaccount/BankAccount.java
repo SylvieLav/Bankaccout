@@ -1,9 +1,9 @@
-package fr.arolla.main;
+package fr.arolla.bankaccount;
 
-import fr.arolla.exceptions.NotEnoughMoneyException;
+import fr.arolla.bankaccount.exceptions.NotEnoughMoneyException;
 
-import static fr.arolla.main.OperationType.DEPOSIT;
-import static fr.arolla.main.OperationType.WITHDRAWAL;
+import static fr.arolla.bankaccount.model.OperationType.DEPOSIT;
+import static fr.arolla.bankaccount.model.OperationType.WITHDRAWAL;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.OptionalDouble;
 import java.util.stream.Collectors;
+
+import fr.arolla.bankaccount.model.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

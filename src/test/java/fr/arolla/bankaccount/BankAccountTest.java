@@ -1,17 +1,18 @@
-package fr.arolla.main;
+package fr.arolla.bankaccount;
 
-import static fr.arolla.main.OperationType.DEPOSIT;
-import static fr.arolla.main.OperationType.WITHDRAWAL;
+import static fr.arolla.bankaccount.model.OperationType.DEPOSIT;
+import static fr.arolla.bankaccount.model.OperationType.WITHDRAWAL;
 import static org.assertj.core.api.Assertions.*;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import fr.arolla.bankaccount.BankAccount;
+import fr.arolla.bankaccount.model.Operation;
+import fr.arolla.bankaccount.model.OperationType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

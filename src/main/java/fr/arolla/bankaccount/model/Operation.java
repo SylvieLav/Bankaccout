@@ -1,4 +1,4 @@
-package fr.arolla.main;
+package fr.arolla.bankaccount.model;
 
 import java.time.LocalDate;
 

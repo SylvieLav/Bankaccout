@@ -1,4 +1,4 @@
-package fr.arolla.main;
+package fr.arolla.fizzbuzz.rule;
 
 import java.util.function.IntPredicate;
 

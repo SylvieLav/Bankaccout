@@ -1,4 +1,6 @@
-package fr.arolla.main;
+package fr.arolla.fizzbuzz.rule;
+
+import fr.arolla.fizzbuzz.rule.FizzBuzzPredicate;
 
 public class FizzBuzzRule {
 

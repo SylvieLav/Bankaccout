@@ -1,4 +1,4 @@
-package fr.arolla.exceptions;
+package fr.arolla.bankaccount.exceptions;
 
 public class NotEnoughMoneyException extends RuntimeException {
 

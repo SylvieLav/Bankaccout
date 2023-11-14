@@ -1,4 +1,4 @@
-package fr.arolla.main;
+package fr.arolla.bankaccount.model;
 
 public enum OperationType {
    DEPOSIT,
