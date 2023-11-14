@@ -50,18 +50,16 @@ public final class BankAccount {
    }
 
    int getBalance() {
-      int deposits = operations.stream()
-            .filter(o -> o.operationType() == DEPOSIT)
-            .map(Operation::amount)
-            .mapToInt(i -> i)
-            .sum();
-      int withdrawals = operations.stream()
-            .filter(o -> o.operationType() == WITHDRAWAL)
-            .map(Operation::amount)
-            .mapToInt(i -> i)
-            .sum();
-
-      return deposits - withdrawals;
+      int accumulator = 0;
+      for (Operation operation : operations) {
+         accumulator += switch (operation) {
+            case null -> 0;
+            case Operation o when o.operationType() == WITHDRAWAL -> -o.amount();
+            case Operation o when o.operationType() == DEPOSIT -> o.amount();
+            default -> 0;
+         };
+      }
+      return accumulator;
    }
 
    @Override
