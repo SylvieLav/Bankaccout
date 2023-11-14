@@ -7,7 +7,7 @@ public class FizzBuzzRule {
    private final FizzBuzzPredicate predicate;
    private final String output;
 
-   FizzBuzzRule(FizzBuzzPredicate predicate, String output) {
+   public FizzBuzzRule(FizzBuzzPredicate predicate, String output) {
       this.predicate = predicate;
       this.output = output;
    }
