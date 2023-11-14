@@ -107,4 +107,8 @@ public final class BankAccount {
    public Map<LocalDate, List<Operation>> getOperationsByDate() {
       return operations.stream().collect(Collectors.groupingBy(Operation::localDate));
    }
+
+   public List<Operation> getOperationsFromNewestToOldest() {
+      return operations.reversed();
+   }
 }

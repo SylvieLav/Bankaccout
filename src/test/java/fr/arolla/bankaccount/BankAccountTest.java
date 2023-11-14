@@ -166,20 +166,8 @@ class BankAccountTest {
    }
 
    @Test
-   void should_access_by_reflexion() throws InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
-//      Method[] methods = BankAccount.class.getMethods();
-//      for (Method method : methods) {
-//         System.out.println(method);
-//      }
-
-      Operation operation = Operation.class.getDeclaredConstructor(
-              OperationType.class,
-              LocalDate.class,
-              Integer.class)
-              .newInstance(DEPOSIT, LocalDate.now(), 100);
-      System.out.println(operation);
-
-      System.out.println(Operation.class.isEnum());
+   void should_access_by_reflexion() {
+      assertThat(Operation.class.isRecord()).isTrue();
    }
 
    @Test
