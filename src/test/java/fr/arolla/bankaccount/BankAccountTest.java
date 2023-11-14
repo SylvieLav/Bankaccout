@@ -4,13 +4,11 @@ import static fr.arolla.bankaccount.model.OperationType.DEPOSIT;
 import static fr.arolla.bankaccount.model.OperationType.WITHDRAWAL;
 import static org.assertj.core.api.Assertions.*;
 
-import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import fr.arolla.bankaccount.BankAccount;
 import fr.arolla.bankaccount.model.Operation;
 import fr.arolla.bankaccount.model.OperationType;
 import org.junit.jupiter.api.BeforeEach;
@@ -182,5 +180,26 @@ class BankAccountTest {
       System.out.println(operation);
 
       System.out.println(Operation.class.isEnum());
+   }
+
+   @Test
+   void should_return_operations_with_reversed_order() {
+      // given
+      List<Operation> operations = new ArrayList<>();
+      operations.add(createOperation(DEPOSIT, LocalDate.of(2023, 11, 1), 100));
+      operations.add(createOperation(WITHDRAWAL, LocalDate.of(2023, 11, 5), 10));
+      operations.add(createOperation(WITHDRAWAL, LocalDate.of(2023, 11, 10), 20));
+      operations.add(createOperation(WITHDRAWAL, LocalDate.now(), 30));
+      bankAccount = new BankAccount("ABC", operations);
+
+      // when
+      List<Operation> operationsFromNewestToOldest = bankAccount.getOperationsFromNewestToOldest();
+
+      // then
+      assertThat(operationsFromNewestToOldest).containsExactly(
+              createOperation(WITHDRAWAL, LocalDate.now(), 30),
+              createOperation(WITHDRAWAL, LocalDate.of(2023, 11, 10), 20),
+              createOperation(WITHDRAWAL, LocalDate.of(2023, 11, 5), 10),
+              createOperation(DEPOSIT, LocalDate.of(2023, 11, 1), 100));
    }
 }
