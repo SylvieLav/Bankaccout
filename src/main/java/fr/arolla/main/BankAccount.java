@@ -11,15 +11,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.OptionalDouble;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public final class BankAccount {
 
    private final String iban;
    private final List<Operation> operations;
-   private static Logger LOGGER = Logger.getLogger(BankAccount.class.getName());
+   private static Logger LOGGER = LoggerFactory.getLogger(BankAccount.class);
 
    public BankAccount(String iban) {
       this.iban = iban;
@@ -34,17 +34,17 @@ public final class BankAccount {
    void withdraw(int amount) {
       int balance = getBalance();
       if (amount > balance) {
-         LOGGER.log(Level.SEVERE, "Cannot withdraw {0}, amount left is {1}", new Object[]{amount, balance});
+         LOGGER.error("Cannot withdraw {}, amount left is {}", amount, balance);
          throw new NotEnoughMoneyException("Cannot withdraw " + amount + ", amount left is " + balance);
       }
 
       operations.add(new Operation(WITHDRAWAL, LocalDate.now(), amount));
-      LOGGER.log(Level.INFO, "Withdrawal of {0} done successfully !", amount);
+      LOGGER.info("Withdrawal of {} done successfully !", amount);
    }
 
    void deposit(int amount) {
       operations.add(new Operation(DEPOSIT, LocalDate.now(), amount));
-      LOGGER.log(Level.INFO, "Deposit of {0} done successfully !", amount);
+      LOGGER.info("Deposit of {} done successfully !", amount);
    }
 
    int getBalance() {
